@@ -1,0 +1,2640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>LifeMind - Salud Mental</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg-main: #050910;
+            --bg-secondary: #0b1524;
+            --bg-card: #111827;
+            --bg-overlay: rgba(0, 0, 0, 0.6);
+            --primary: #2563eb;
+            --primary-soft: #1d4ed8;
+            --accent: #38bdf8;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-soft: #1f2937;
+            --danger: #f97373;
+            --success: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #0b1726 0, #020617 50%, #000 100%);
+            color: var(--text-main);
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* HEADER FIJO */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: linear-gradient(to right, #020617, #020617ee, #020617);
+            border-bottom: 1px solid var(--border-soft);
+            backdrop-filter: blur(14px);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .logo-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 30%, var(--accent), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .logo-text-main {
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            font-size: 1rem;
+        }
+
+        .logo-text-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .nav-links a {
+            padding: 0.35rem 0.6rem;
+            border-radius: 999px;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Búsqueda */
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-input {
+            width: 0;
+            opacity: 0;
+            padding: 0.35rem 0.5rem 0.35rem 1.6rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: #020617;
+            color: var(--text-main);
+            font-size: 0.8rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .search-input.active {
+            width: 200px;
+            opacity: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 0.5rem;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .icon-button {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .icon-button:hover {
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary {
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.8rem;
+            border: none;
+            background: linear-gradient(120deg, var(--primary), var(--accent));
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.06);
+            box-shadow: 0 18px 40px rgba(37, 99, 235, 0.45);
+        }
+
+        /* LAYOUT GENERAL */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5.5rem 1rem 3rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            min-height: 75vh;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background-image: url("https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg");
+            background-size: contain; background-repeat: no-repeat; background-color:#000;
+            background-position: center;
+            box-shadow: 0 32px 60px rgba(15, 23, 42, 0.9);
+            margin-bottom: 4rem;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.55), transparent 50%),
+                        radial-gradient(circle at bottom right, rgba(8, 47, 73, 0.9), rgba(0, 0, 0, 0.9));
+            mix-blend-mode: multiply;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), #020617dd 80%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            padding: 3.5rem clamp(1.5rem, 5vw, 3.5rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 1.8rem;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border-radius: 999px;
+            padding: 0.25rem 0.75rem;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .hero-pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.25);
+        }
+
+        .hero-title {
+            font-size: clamp(2.4rem, 4vw, 3rem);
+            max-width: 22ch;
+        }
+
+        .hero-highlight {
+            background: linear-gradient(120deg, #60a5fa, #a5b4fc, #38bdf8);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text {
+            max-width: 42ch;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn-secondary {
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-soft);
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-main);
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(15, 23, 42, 1);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8);
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .hero-meta-item span {
+            display: block;
+        }
+
+        .hero-meta-label {
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.65rem;
+            color: #64748b;
+        }
+
+        .hero-meta-value {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* INTRODUCCIÓN */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+            gap: 2rem;
+        }
+
+        .card {
+            background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 55%),
+                        #020617;
+            border-radius: 1.2rem;
+            border: 1px solid var(--border-soft);
+            padding: 1.5rem;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.85);
+        }
+
+        .card-muted {
+            background: #020617;
+        }
+
+        .intro-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.9rem;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(55, 65, 81, 0.8);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin: 0.15rem;
+        }
+
+        .chip-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: var(--accent);
+        }
+
+        .list-check {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .list-check li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .check-icon {
+            margin-top: 0.1rem;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        /* PODCASTS */
+        .podcasts-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid var(--border-soft);
+            color: var(--text-muted);
+        }
+
+        .tag-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #22c55e;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .podcast-card {
+            background: radial-gradient(circle at top, rgba(37, 99, 235, 0.28), transparent 55%),
+                        #020617;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.8);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .podcast-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.8);
+            box-shadow: 0 24px 50px rgba(8, 47, 73, 0.95);
+        }
+
+        .podcast-image {
+            height: 140px;
+            background-size: contain; background-repeat: no-repeat; background-color:#000;
+            background-position: center;
+        }
+
+        .podcast-body {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .podcast-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .podcast-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .podcast-footer {
+            padding: 0.75rem 1rem 1rem;
+            margin-top: auto;
+        }
+
+        /* TRASTORNOS */
+        .disorder-card {
+            background: #020617;
+            border-radius: 1rem;
+            border: 1px solid var(--border-soft);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.8);
+        }
+
+        .disorder-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(148, 163, 184, 0.7);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.95);
+        }
+
+        .disorder-tag {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .disorder-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .disorder-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .disorder-img {
+            height: 90px;
+            border-radius: 0.7rem;
+            background-size: contain; background-repeat: no-repeat; background-color:#000;
+            background-position: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .btn-ghost {
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(8, 47, 73, 0.5);
+        }
+
+        /* VIDEOS */
+        .video-item {
+            background: #020617;
+            border-radius: 1rem;
+            border: 1px solid var(--border-soft);
+            padding: 1rem;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.85);
+        }
+
+        .video-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        .video-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.7rem;
+        }
+
+        /* CUESTIONARIO: ahora en dos columnas (form + resultados) */
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+            gap: 2rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 0.9rem;
+            padding-bottom: 0.9rem;
+            border-bottom: 1px dashed var(--border-soft);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+
+        .quiz-question-label {
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .quiz-scales {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+        }
+
+        .quiz-scales label {
+            padding: 0;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .quiz-scales input[type="radio"] {
+            display: none;
+        }
+
+        .quiz-option-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            transition: all 0.15s ease;
+        }
+
+        .quiz-option-chip.selected {
+            background: var(--success);
+            color: #ffffff;
+            border-color: var(--success);
+            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.6);
+        }
+
+        .quiz-legend {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        .results-card {
+            background: radial-gradient(circle at top, rgba(37, 99, 235, 0.2), transparent 55%),
+                        #020617;
+            border-radius: 1.2rem;
+            border: 1px solid var(--border-soft);
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.95);
+        }
+
+        .results-general {
+            margin-bottom: 0.7rem;
+        }
+
+        .results-list {
+            list-style: none;
+            max-height: 260px;
+            overflow: auto;
+            padding-right: 0.3rem;
+        }
+
+        .results-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.45rem 0.2rem;
+            border-bottom: 1px dashed var(--border-soft);
+        }
+
+        .results-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-name {
+            font-weight: 600;
+        }
+
+        .result-percentage {
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .result-tip {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+        }
+
+        /* CARRUSEL */
+        .carousel {
+            position: relative;
+            border-radius: 1.4rem;
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: #020617;
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.95);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 260px;
+            position: relative;
+            background-size: contain; background-repeat: no-repeat; background-color:#000;
+            background-position: center;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.1));
+        }
+
+        .carousel-content {
+            position: absolute;
+            left: 1.8rem;
+            right: 1.8rem;
+            bottom: 1.6rem;
+        }
+
+        .carousel-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .carousel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .carousel-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .carousel-btn {
+            pointer-events: auto;
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin: 0 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(37, 99, 235, 0.8);
+            border-color: rgba(37, 99, 235, 0.9);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0.7rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .carousel-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.4);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .carousel-dot.active {
+            width: 14px;
+            background: var(--accent);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border-soft);
+            background: #020617;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .social-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--border-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .social-icon:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(8, 47, 73, 1);
+        }
+
+        /* UTILIDADES */
+        .pill-soft {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .small-muted {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .badge-soft {
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* MODALES TRASTORNOS */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-contenido {
+            background-color: #020617;
+            margin: 5% auto;
+            padding: 20px;
+            max-width: 700px;
+            border-radius: 1rem;
+            border: 1px solid var(--border-soft);
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 1);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .modal-contenido h3 {
+            margin-bottom: 0.6rem;
+            font-size: 1.2rem;
+        }
+
+        .cerrar {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 960px) {
+            .nav-links {
+                display: none;
+            }
+
+            .intro-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .quiz-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .grid-4 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .hero {
+                min-height: 80vh;
+            }
+
+            .hero-content {
+                padding: 3rem 1.5rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .grid-3,
+            .grid-4,
+            .grid-2 {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .hero-meta {
+                gap: 0.7rem;
+            }
+
+            .hero {
+                border-radius: 1rem;
+            }
+
+            main {
+                padding-top: 5rem;
+            }
+
+            .search-input.active {
+                width: 150px;
+            }
+        }
+    
+/* GALERÍA VERTICAL */
+.vertical-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding-right: 0.4rem;
+    scroll-behavior: smooth;
+}
+.v-img {
+    width: 100%;
+    height: 350px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #000;
+    border-radius: 1rem;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
+}
+
+/* GALERÍA VERTICAL ADAPTADA */
+.vertical-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem 0.5rem;
+}
+
+.v-img {
+    width: 100%;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 1.2rem;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.8);
+}
+
+/* GALERÍA VERTICAL RECTÁNGULOS COMPLETOS */
+.vertical-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem 0.5rem;
+}
+
+.v-img {
+    width: 100%;
+    height: 450px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #000;
+    border-radius: 1rem;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
+}
+</style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav class="nav">
+            <div class="logo">
+                <div class="logo-circle">LM</div>
+                <div>
+                    <div class="logo-text-main">LifeMind</div>
+                    <div class="logo-text-sub">Salud mental y bienestar</div>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#podcasts">Podcasts</a>
+                <a href="#trastornos">Trastornos</a>
+                <a href="#videos">Videos</a>
+                <a href="#cuestionario">Cuestionario</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+
+            <div class="nav-cta">
+                <div class="search-wrapper">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Buscar podcasts, trastornos, videos..."
+                    />
+                    <span class="search-icon">🔍</span>
+                </div>
+                <button class="icon-button" id="toggleSearchBtn" title="Buscar">
+                    🔍
+                </button>
+                <button class="btn-primary" onclick="scrollToSection('podcasts')">
+                    Ingresar a podcasts
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section id="inicio" class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-gradient"></div>
+            <div class="hero-content">
+                <div class="hero-pill">
+                    <span class="hero-pill-dot"></span>
+                    Acompañamiento integral para tu mente
+                </div>
+                <h1 class="hero-title">
+                    Salud Mental y <span class="hero-highlight">Bienestar</span> en un solo espacio seguro.
+                </h1>
+                <p class="hero-text">
+                    Explora podcasts confiables, recursos sobre trastornos mentales, videos educativos
+                    y un cuestionario orientativo que te ayuda a entender mejor cómo te sientes.
+                    No sustituye atención profesional, pero puede ser tu primer paso hacia el cuidado de tu salud emocional.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-primary" onclick="scrollToSection('podcasts')">
+                        Explorar podcasts
+                    </button>
+                    <button class="btn-secondary" onclick="scrollToSection('cuestionario')">
+                        Realizar cuestionario
+                    </button>
+                </div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <span class="hero-meta-label">Contenido</span>
+                        <span class="hero-meta-value">Podcasts, videos y recursos clave</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span class="hero-meta-label">Enfoque</span>
+                        <span class="hero-meta-value">Ansiedad · Depresión · Estrés y más</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <span class="hero-meta-label">Propósito</span>
+                        <span class="hero-meta-value">Información clara y acompañamiento respetuoso</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTRODUCCIÓN -->
+        <section id="introduccion">
+            <div class="section-header">
+                <h2 class="section-title">¿Qué es la salud mental?</h2>
+                <p class="section-subtitle">
+                    Una mirada breve y amable a los pilares de una mente cuidada.
+                </p>
+            </div>
+
+            <div class="intro-grid">
+                <div class="card">
+                    <h3 class="intro-title">Equilibrio emocional y bienestar cotidiano</h3>
+                    <p class="intro-text">
+                        La salud mental se refiere a la forma en que pensamos, sentimos y actuamos
+                        mientras enfrentamos la vida diaria. Incluye la capacidad de manejar el estrés,
+                        relacionarnos con otras personas y tomar decisiones saludables.
+                    </p>
+                    <p class="intro-text">
+                        Cuidar la mente no es señal de debilidad, sino un acto de responsabilidad personal.
+                        Cada persona puede necesitar apoyos distintos en momentos diferentes de su vida.
+                    </p>
+                    <div>
+                        <span class="chip">
+                            <span class="chip-dot"></span>
+                            Autoconocimiento
+                        </span>
+                        <span class="chip">
+                            <span class="chip-dot"></span>
+                            Manejo del estrés
+                        </span>
+                        <span class="chip">
+                            <span class="chip-dot"></span>
+                            Relaciones sanas
+                        </span>
+                        <span class="chip">
+                            <span class="chip-dot"></span>
+                            Apoyo profesional
+                        </span>
+                    </div>
+                </div>
+
+                <div class="card card-muted">
+                    <h3 class="intro-title">Características de una buena salud mental</h3>
+                    <ul class="list-check">
+                        <li>
+                            <span class="check-icon">✔</span>
+                            <span>
+                                Capacidad para reconocer y expresar emociones sin juzgarse de forma
+                                excesiva.
+                            </span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✔</span>
+                            <span>
+                                Habilidades para afrontar el estrés, las pérdidas y los cambios de la vida
+                                cotidiana.
+                            </span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✔</span>
+                            <span>
+                                Relaciones basadas en el respeto, los límites claros y la comunicación
+                                honesta.
+                            </span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✔</span>
+                            <span>
+                                Sentido de propósito y metas realistas que dan dirección y motivación al
+                                día a día.
+                            </span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✔</span>
+                            <span>
+                                Disposición a buscar ayuda profesional cuando las emociones o los
+                                pensamientos se vuelven abrumadores.
+                            </span>
+                        </li>
+                    </ul>
+                    <p class="intro-text">
+                        Esta página no hace diagnósticos, pero puede orientarte y animarte a consultar
+                        con especialistas cuando lo consideres necesario.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+   <!-- PODCASTS SECTION START -->
+<section id="podcasts">
+<!-- PODCAST 1 -->
+<article class="podcast-card">
+    <div class="podcast-image"></div>
+    <div class="podcast-body">
+        <div class="podcast-title">¿Qué es la meditación?</div>
+        <div class="podcast-meta">Podcast</div>
+    </div>
+    <div class="podcast-footer">
+        <audio controls style="width:100%;">
+            <source src="https://www.clinicadepsicologiadalinde.com.mx/app/download/11588296577/114QU%C3%89%2BES%2BLA%2BMEDITACI%C3%93N%2B22%2Bnov%2B2018.mp3?t=1632422446" type="audio/mpeg">
+        </audio>
+    </div>
+</article>
+
+<!-- PODCAST DRIVE 1 -->
+<article class="podcast-card searchable" data-type="podcast" data-title="¿Por qué nos cuesta tanto querernos? #187">
+    <div class="podcast-image" style="background-image: url('https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg');"></div>
+    <div class="podcast-body">
+        <div class="podcast-title">¿Por qué nos cuesta tanto querernos? #187</div>
+        <div class="podcast-meta">Duración: ~31 min · Autoestima</div>
+        <p>Exploramos qué es la autoestima, por qué nos cuesta querernos, y cómo empezar a valorarnos de verdad.</p>
+    </div>
+    <div class="podcast-footer">
+        <button class="btn-secondary" onclick="window.open('https://podcasts.apple.com/es/podcast/por-qu%C3%A9-nos-cuesta-tanto-querernos-187/id1513593368?i=1000708450550','_blank')">Escuchar episodio</button>
+    </div>
+</article>
+
+
+
+
+<!-- PODCAST MIEDO -->
+<article class="podcast-card">
+    <div class="podcast-image"></div>
+    <div class="podcast-body">
+        <div class="podcast-title">Emoción del miedo</div>
+        <div class="podcast-meta">Podcast</div>
+    </div>
+    <div class="podcast-footer">
+        <audio controls style="width:100%;">
+            <source src="https://www.clinicadepsicologiadalinde.com.mx/app/download/11901772377/Emocion%2Bdel%2Bmiedo%2Bpodcast.mp3?t=1632422446" type="audio/mpeg">
+        </audio>
+    </div>
+</article>
+
+<!-- PODCAST SOLEDAD -->
+<article class="podcast-card">
+    <div class="podcast-image"></div>
+    <div class="podcast-body">
+        <div class="podcast-title">Soledad</div>
+        <div class="podcast-meta">Podcast</div>
+    </div>
+    <div class="podcast-footer">
+        <audio controls style="width:100%;">
+            <source src="https://www.clinicadepsicologiadalinde.com.mx/app/download/11902420177/18%2Bde%2BJunio%2BSoledad%2Bpodcast.mp3?t=1632422446" type="audio/mpeg">
+        </audio>
+    </div>
+</article>
+
+<!-- PODCAST TRASTORNOS ALIMENTICIOS -->
+<article class="podcast-card">
+    <div class="podcast-image"></div>
+    <div class="podcast-body">
+        <div class="podcast-title">Trastornos alimenticios</div>
+        <div class="podcast-meta">Podcast</div>
+    </div>
+    <div class="podcast-footer">
+        <audio controls style="width:100%;">
+            <source src="https://www.clinicadepsicologiadalinde.com.mx/app/download/11589865177/70TRASTORNOS%2BALIMENTICIOS%2B18%2Benero%2B2018.mp3?t=1632422446" type="audio/mpeg">
+        </audio>
+    </div>
+</article>
+
+        
+</section>
+<!-- TRASTORNOS -->
+        <section id="trastornos">
+            <div class="section-header">
+                <h2 class="section-title">Trastornos de la Salud Mental</h2>
+                <p class="section-subtitle">
+                    Diez trastornos frecuentes explicados de forma breve y respetuosa.
+                </p>
+            </div>
+
+            <div class="grid grid-4">
+                <!-- Ansiedad -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="ansiedad"
+                    data-title="Ansiedad"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-23 224443.png');
+                    "></div>
+                    <div class="disorder-tag">Trastorno de ansiedad</div>
+                    <h3 class="disorder-title">Ansiedad</h3>
+                    <p class="disorder-desc">
+                        Preocupación intensa, anticipación negativa y síntomas físicos como
+                        tensión o palpitaciones que se prolongan en el tiempo.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalAnsiedad')">Más información</button>
+                </article>
+
+                <!-- Depresión -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="depresion"
+                    data-title="Depresión"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-23 224739.png');
+                    "></div>
+                    <div class="disorder-tag">Trastorno del estado de ánimo</div>
+                    <h3 class="disorder-title">Depresión</h3>
+                    <p class="disorder-desc">
+                        Tristeza profunda, pérdida de interés y cambios en el sueño o apetito
+                        que afectan la vida diaria durante varias semanas.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalDepresion')">Más información</button>
+                </article>
+
+                <!-- Bipolar -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="bipolar"
+                    data-title="Trastorno bipolar"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-23 224917.png');
+                    "></div>
+                    <div class="disorder-tag">Estado de ánimo</div>
+                    <h3 class="disorder-title">Trastorno bipolar</h3>
+                    <p class="disorder-desc">
+                        Cambios marcados entre episodios de ánimo muy elevado y periodos de
+                        tristeza o falta de energía.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalBipolar')">Más información</button>
+                </article>
+
+                <!-- Esquizofrenia -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="esquizofrenia"
+                    data-title="Esquizofrenia"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-23 225031.png');
+                    "></div>
+                    <div class="disorder-tag">Trastorno psicótico</div>
+                    <h3 class="disorder-title">Esquizofrenia</h3>
+                    <p class="disorder-desc">
+                        Puede incluir alucinaciones, ideas delirantes y cambios en el
+                        pensamiento, requiriendo acompañamiento profesional continuo.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalEsquizofrenia')">Más información</button>
+                </article>
+
+                <!-- TOC -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="toc"
+                    data-title="Trastorno obsesivo-compulsivo"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-23 225322.png');
+                    "></div>
+                    <div class="disorder-tag">Ansiedad</div>
+                    <h3 class="disorder-title">Trastorno obsesivo-compulsivo (TOC)</h3>
+                    <p class="disorder-desc">
+                        Pensamientos intrusivos y repetitivos acompañados de conductas que se
+                        realizan para reducir la ansiedad.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalTOC')">Más información</button>
+                </article>
+
+                <!-- Pánico -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="panico"
+                    data-title="Trastorno de pánico"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-25 093039.png');
+                    "></div>
+                    <div class="disorder-tag">Ansiedad</div>
+                    <h3 class="disorder-title">Trastorno de pánico</h3>
+                    <p class="disorder-desc">
+                        Episodios súbitos de miedo intenso, palpitaciones y sensación de
+                        pérdida de control o peligro inminente.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalPanico')">Más información</button>
+                </article>
+
+                <!-- TEPT -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="tept"
+                    data-title="Trastorno de estrés postraumático"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-23 225459.png');
+                    "></div>
+                    <div class="disorder-tag">Trauma</div>
+                    <h3 class="disorder-title">Trastorno de estrés postraumático (TEPT)</h3>
+                    <p class="disorder-desc">
+                        Consecuencias emocionales y físicas después de vivir o presenciar una
+                        experiencia traumática.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalTEPT')">Más información</button>
+                </article>
+
+                <!-- Conducta alimentaria -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="alimentaria"
+                    data-title="Trastornos de la conducta alimentaria"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-25 092958.png');
+                    "></div>
+                    <div class="disorder-tag">Miedo</div>
+                    <h3 class="disorder-title">Fobia social</h3>
+                    <p class="disorder-desc">
+                        Patrones intensos de preocupación por el peso, la comida y la imagen
+                        corporal que afectan la salud física y mental.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalAlimentaria')">Más información</button>
+                </article>
+
+                <!-- TLP -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="tlp"
+                    data-title="Trastorno de personalidad límite"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-23 225141.png');
+                    "></div>
+                    <div class="disorder-tag">Personalidad</div>
+                    <h3 class="disorder-title">Trastorno de personalidad límite (TLP)</h3>
+                    <p class="disorder-desc">
+                        Emociones intensas y cambiantes, miedo al abandono y dificultades en las
+                        relaciones interpersonales.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalTLP')">Más información</button>
+                </article>
+
+                <!-- Insomnio crónico -->
+                <article
+                    class="disorder-card searchable"
+                    data-type="trastorno"
+                    data-key="insomnio"
+                    data-title="Insomnio crónico"
+                >
+                    <div class="disorder-img" style="
+                        background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-12-02 010950.png');
+                    "></div>
+                    <div class="disorder-tag">Duelo</div>
+                    <h3 class="disorder-title">Trastorno de duelo complicado</h3>
+                    <p class="disorder-desc">
+                        Dificultad constante para conciliar o mantener el sueño, con impacto en
+                        el rendimiento y el estado de ánimo.
+                    </p>
+                    <button class="btn-ghost" onclick="abrirModal('modalInsomnio')">Más información</button>
+                </article>
+            </div>
+        </section>
+
+        <!-- VIDEOS -->
+        <section id="videos">
+            <div class="section-header">
+                <h2 class="section-title">Videos recomendados de YouTube</h2>
+                <p class="section-subtitle">
+                    Contenido educativo para comprender mejor los desafíos de la salud mental.
+                </p>
+            </div>
+
+            <div class="grid grid-3">
+                <article class="video-item searchable" data-type="video" data-title="Ansiedad">
+                    <h3 class="video-title">Ansiedad</h3>
+                    <p class="video-desc">
+                        Video que explica qué es la ansiedad y cómo manejar algunos síntomas en el día a día.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://youtu.be/34ZVrmJxEUo?si=rmk6bH72QP-6Hosq')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Depresión">
+                    <h3 class="video-title">Depresión</h3>
+                    <p class="video-desc">
+                        Explicación breve sobre la depresión, sus síntomas principales y la importancia de pedir ayuda profesional.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://youtu.be/c5sW6t3eyQA?si=Y5139dPOEGKpWjzmhttps://www.youtube.com/watch?v=Wf7kStQYspc')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Estrés">
+                    <h3 class="video-title">Tastorno bipolar</h3>
+                    <p class="video-desc">
+                        este video explica de forma clara qué es el trastorno bipolar, los síntomas, los distintos tipos y cómo puede diagnosticarse. Es una buena introducción si estás buscando entender mejor la condición.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://youtu.be/ln1JTOJ4dyU?si=i13hQ8dycuuldMog')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Sueño y salud mental">
+                    <h3 class="video-title">Ezquisofrenia</h3>
+                    <p class="video-desc">
+                        Este video en español aborda preguntas esenciales: ¿qué es la esquizofrenia? ¿Qué síntomas son comunes? ¿Cómo se trata? Ofrece una buena introducción general.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://www.youtube.com/watch?v=GEkKFVafU9I')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Autocuidado">
+                    <h3 class="video-title">Trastorno limite de personalidad</h3>
+                    <p class="video-desc">
+                        Describe las características comunes del TLP de forma clara y accesible — ideal si buscas entender los rasgos típicos del trastorno.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://www.youtube.com/watch?v=S4V2IglInL0')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Trauma y TEPT">
+                    <h3 class="video-title">Trastorno obsesivo compulsivo</h3>
+                    <p class="video-desc">
+                        Explicación básica sobre qué es el TOC: obsesiones, compulsiones y tratamientos posibles.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://www.youtube.com/watch?v=c1pQPbg_hyI')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Relaciones sanas">
+                    <h3 class="video-title">Trastorno de estres post-traumatico</h3>
+                    <p class="video-desc">
+                        Señales de una de estres y cómo controlarlo.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://www.youtube.com/watch?v=kOjoY66vt-Q')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Mindfulness y respiración">
+                    <h3 class="video-title">Fobia social</h3>
+                    <p class="video-desc">
+                        Práctica guiada breve de respiración consciente para controlar la ansiedad social.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://www.youtube.com/watch?v=gEaadjSca28')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Autoestima y autocompasión">
+                    <h3 class="video-title">Trastorno de panico</h3>
+                    <p class="video-desc">
+                        una breve esplicasion sobre trastorno de panico.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://www.youtube.com/watch?v=gEaadjSca28')">
+                        Ver video
+                    </button>
+                </article>
+
+                <article class="video-item searchable" data-type="video" data-title="Ayuda profesional">
+                    <h3 class="video-title">Trastorno de duelo complicado</h3>
+                    <p class="video-desc">
+                        video para aprender a controlar el duelo.
+                    </p>
+                    <button class="btn-secondary" onclick="abrirVideo('https://www.youtube.com/watch?v=8iRpJ9zr3Rw')">
+                        Ver video
+                    </button>
+                </article>
+            </div>
+        </section>
+
+        <!-- CUESTIONARIO -->
+        <section id="cuestionario">
+            <div class="section-header">
+                <h2 class="section-title">Cuestionario de Autoevaluación</h2>
+                <p class="section-subtitle">
+                    Este cuestionario es orientativo y no sustituye una valoración profesional.
+                </p>
+            </div>
+
+            <div class="quiz-grid">
+                <form id="quizForm" class="card">
+                    <div style="margin-bottom: 0.6rem;">
+                        <span class="badge-soft">Opciones</span>
+                        <span class="small-muted" style="margin-left: 0.4rem;">
+                            Nunca · Casi nunca · A veces · Siempre
+                        </span>
+                    </div>
+
+                    <!-- Preguntas -->
+                    <div class="quiz-question" data-disorder="ansiedad">
+                        <div class="quiz-question-label">
+                            1. En las últimas semanas, ¿con qué frecuencia has sentido preocupación intensa
+                            o dificultad para relajarte?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q1" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q1" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q1" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q1" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="depresion">
+                        <div class="quiz-question-label">
+                            2. ¿Con qué frecuencia has notado falta de motivación o pérdida de interés en
+                            actividades que antes disfrutabas?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q2" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q2" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q2" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q2" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="insomnio">
+                        <div class="quiz-question-label">
+                            3. ¿Con qué frecuencia te cuesta conciliar el sueño o te despiertas varias
+                            veces durante la noche?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q3" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q3" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q3" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q3" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="panico">
+                        <div class="quiz-question-label">
+                            4. ¿Con qué frecuencia has sentido palpitaciones, dificultad para respirar o
+                            miedo intenso de manera repentina?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q4" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q4" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q4" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q4" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="toc">
+                        <div class="quiz-question-label">
+                            5. ¿Con qué frecuencia repites pensamientos o acciones para aliviar una
+                            sensación de incomodidad o miedo?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q5" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q5" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q5" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q5" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="tept">
+                        <div class="quiz-question-label">
+                            6. ¿Has tenido recuerdos invasivos, pesadillas o reacciones intensas ligadas a
+                            una experiencia difícil del pasado?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q6" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q6" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q6" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q6" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="bipolar">
+                        <div class="quiz-question-label">
+                            7. ¿Con qué frecuencia notas cambios muy marcados entre momentos de mucha
+                            energía y otros de desánimo extremo?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q7" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q7" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q7" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q7" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="alimentaria">
+                        <div class="quiz-question-label">
+                            8. ¿Con qué frecuencia te preocupa de forma intensa tu peso, tu cuerpo o la
+                            comida?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q8" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q8" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q8" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q8" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="tlp">
+                        <div class="quiz-question-label">
+                            9. ¿Con qué frecuencia sientes tus emociones muy intensas y cambiantes, o
+                            miedo a que las personas te abandonen?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q9" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q9" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q9" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q9" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-disorder="ansiedad">
+                        <div class="quiz-question-label">
+                            10. ¿Con qué frecuencia te preocupa de forma excesiva lo que otras personas
+                            piensan de ti?
+                        </div>
+                        <div class="quiz-scales">
+                            <label>
+                                <input type="radio" name="q10" value="1" />
+                                <span class="quiz-option-chip">Nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q10" value="2" />
+                                <span class="quiz-option-chip">Casi nunca</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q10" value="3" />
+                                <span class="quiz-option-chip">A veces</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="q10" value="4" />
+                                <span class="quiz-option-chip">Siempre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-legend">
+                        Este cuestionario tiene fines informativos y no reemplaza la evaluación de un
+                        profesional de la salud mental.
+                    </div>
+
+                    <div style="margin-top: 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button type="button" class="btn-primary" onclick="procesarCuestionario()">
+                            Enviar respuestas
+                        </button>
+                        <button type="reset" class="btn-secondary" onclick="limpiarResultados()">
+                            Limpiar respuestas
+                        </button>
+                    </div>
+                </form>
+
+                <div class="results-card">
+                    <div class="results-general">
+                        <div class="pill-soft">
+                            Resultados aproximados
+                        </div>
+                        <p class="small-muted" style="margin-top: 0.4rem;">
+                            Se muestran porcentajes estimados para cada trastorno en función de tus respuestas.
+                            Usa esta información como una guía inicial, no como diagnóstico.
+                        </p>
+                        <p id="resultadoGeneral" style="margin-top: 0.5rem; font-weight: 600;">
+                            Aún no se han calculado resultados.
+                        </p>
+                    </div>
+                    <ul id="listaResultados" class="results-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARRUSEL -->
+        <section id="carrusel">
+            <div class="section-header">
+                <h2 class="section-title">Espacio visual </h2>
+                <p class="section-subtitle">
+                    Imágenes de las enfermedades mentales.
+                </p>
+            </div>
+
+            <div class="carousel" id="carousel">
+                <div class="carousel-track" id="carouselTrack">
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-12-02 001518.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Respira</div>
+                            <div class="carousel-title">Un momento para pausar</div>
+                            <div class="carousel-text">
+                                Hacer una pausa, respirar profundo y observar tus sensaciones es una
+                                forma sencilla de reconectar con el presente.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-12-01 235240.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Conexión</div>
+                            <div class="carousel-title">No estás solo</div>
+                            <div class="carousel-text">
+                                Buscar apoyo en personas de confianza o profesionales es una muestra
+                                de valentía, no de debilidad.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-12-02 012140.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Cuidado</div>
+                            <div class="carousel-title">Pequeños gestos diarios</div>
+                            <div class="carousel-text">
+                                Dormir, alimentarte y moverte con amabilidad hacia ti mismo puede
+                                sostener tu salud mental a largo plazo.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-12-02 010740.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Naturaleza</div>
+                            <div class="carousel-title">Colores que calman</div>
+                            <div class="carousel-text">
+                                Contemplar paisajes naturales puede favorecer la sensación de calma y descanso mental.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-12-02 003243.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Luz suave</div>
+                            <div class="carousel-title">Atardecer sereno</div>
+                            <div class="carousel-text">
+                                Observar la transición del día a la noche invita a cerrar ciclos y soltar tensiones.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-25 092933.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Agua</div>
+                            <div class="carousel-title">Fluir y soltar</div>
+                            <div class="carousel-text">
+                                Imaginar que tus preocupaciones fluyen como el agua puede ayudarte a sentir mayor ligereza interna.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 212034.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Montañas</div>
+                            <div class="carousel-title">Perspectiva amplia</div>
+                            <div class="carousel-text">
+                                Imaginarte desde lejos, como en la cima de una montaña, puede ayudarte a ver tus problemas con otra perspectiva.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 211955.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Bosque</div>
+                            <div class="carousel-title">Silencio y paz</div>
+                            <div class="carousel-text">
+                                Un entorno silencioso, aunque sea imaginado, puede ser un refugio mental para descansar de la sobreestimulación.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 211933.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Cielo</div>
+                            <div class="carousel-title">Respirar profundo</div>
+                            <div class="carousel-text">
+                                Mirar al cielo y hacer respiraciones profundas puede ayudarte a liberar tensión física y mental.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="carousel-slide"
+                        style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 211910.png');"
+                    >
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-content">
+                            <div class="carousel-tag">Refugio</div>
+                            <div class="carousel-title">Un lugar seguro</div>
+                            <div class="carousel-text">
+                                Pensar en un espacio seguro y acogedor, real o imaginario, puede darte contención en momentos difíciles.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevSlide">‹</button>
+                    <button class="carousel-btn" id="nextSlide">›</button>
+                </div>
+
+                <div class="carousel-dots" id="carouselDots">
+                    <div class="carousel-dot active" data-index="0"></div>
+                    <div class="carousel-dot" data-index="1"></div>
+                    <div class="carousel-dot" data-index="2"></div>
+                    <div class="carousel-dot" data-index="3"></div>
+                    <div class="carousel-dot" data-index="4"></div>
+                    <div class="carousel-dot" data-index="5"></div>
+                    <div class="carousel-dot" data-index="6"></div>
+                    <div class="carousel-dot" data-index="7"></div>
+                    <div class="carousel-dot" data-index="8"></div>
+                    <div class="carousel-dot" data-index="9"></div>
+                </div>
+            </div>
+        </section>
+<!-- GALERÍA VERTICAL DE IMÁGENES -->
+<section id="galeria-vert">
+    <div class="section-header">
+        <h2 class="section-title">Galería visual</h2>
+        <p class="section-subtitle">Imágenes informativas y de apoyo visual.</p>
+    </div>
+    <div class="vertical-gallery">
+        <div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 135123.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 134000.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 140000.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 135914.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 135805.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 135700.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 135600.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 134020.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 134035.png');"></div>
+<div class="v-img" style="background-image: url('c:/Users/52729/Pictures/Screenshots/Captura de pantalla 2025-11-24 134054.png');"></div>
+    </div>
+</section>
+
+
+
+
+        <!-- CONTACTO -->
+        <section id="contacto">
+            <div class="section-header">
+                <h2 class="section-title">Contacto y ayuda profesional</h2>
+                <p class="section-subtitle">
+                    Si sientes que necesitas apoyo, considera comunicarte con profesionales de tu
+                    región o líneas de ayuda disponibles.
+                </p>
+            </div>
+
+            <div class="card">
+                <p class="small-muted" style="margin-bottom: 0.7rem;">
+                    Este sitio es un recurso educativo. No ofrece consultas, diagnósticos ni
+                    emergencias. Ante cualquier situación de riesgo, acude a los servicios de
+                    urgencia de tu localidad.
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem;">
+                    <div style="flex: 1 1 220px;">
+                        <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">Contacto general</h3>
+                        <p>Correo: contacto@lifemind.org</p>
+                        <p>Teléfono informativo: +52 55 0000 0000</p>
+                    </div>
+                    <div style="flex: 1 1 220px;">
+                        <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">Apoyo profesional</h3>
+                        <p>
+                            Busca en directorios de psicología, psiquiatría o centros de salud mental
+                            de tu zona para recibir atención personalizada.
+                        </p>
+                    </div>
+                    <div style="flex: 1 1 220px;">
+                        <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">En caso de crisis</h3>
+                        <p>
+                            Si estás en peligro o piensas hacerte daño, comunícate de inmediato con
+                            los servicios de emergencia de tu país.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <div class="logo-text-main">LifeMind</div>
+                <div class="logo-text-sub">
+                    © 2025 LifeMind · Este sitio es educativo y no sustituye atención profesional.
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#podcasts">Podcasts</a>
+                <a href="#trastornos">Trastornos</a>
+                <a href="#videos">Videos</a>
+                <a href="#cuestionario">Cuestionario</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+
+            <div class="footer-social">
+                <div class="social-icon">in</div>
+                <div class="social-icon">IG</div>
+                <div class="social-icon">X</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALES TRASTORNOS -->
+    <div id="modalAnsiedad" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalAnsiedad')">&times;</span>
+            <h3>Ansiedad</h3>
+            <p>
+                La ansiedad se caracteriza por preocupación intensa y constante, sensación de alerta permanente
+                y síntomas físicos como tensión muscular, palpitaciones o molestias digestivas. Puede aparecer
+                en situaciones cotidianas o incluso sin un motivo claro, y si se mantiene en el tiempo puede
+                interferir con el sueño, el rendimiento escolar o laboral, y las relaciones con otras personas.
+            </p>
+            <p>
+                Algunas estrategias que suelen ayudar incluyen técnicas de respiración, pausas breves durante el día,
+                actividad física regular y espacios de apoyo emocional. Si la ansiedad es muy intensa o frecuente,
+                es recomendable buscar acompañamiento profesional para trabajarla de forma segura.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalDepresion" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalDepresion')">&times;</span>
+            <h3>Depresión</h3>
+            <p>
+                La depresión va más allá de sentirse triste por un rato. Implica una tristeza profunda, pérdida de interés
+                en actividades que antes eran agradables, cambios en el sueño y el apetito, dificultad para concentrarse
+                y, en ocasiones, pensamientos negativos sobre uno mismo o sobre la vida.
+            </p>
+            <p>
+                No es flojera ni falta de voluntad. Suele requerir un proceso de apoyo profesional y, a veces, tratamiento
+                médico. Pedir ayuda, hablar con alguien de confianza y dar pasos pequeños puede marcar la diferencia en
+                el camino de recuperación.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalBipolar" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalBipolar')">&times;</span>
+            <h3>Trastorno bipolar</h3>
+            <p>
+                El trastorno bipolar se caracteriza por cambios marcados en el estado de ánimo, que alternan entre episodios
+                de ánimo muy elevado o irritable (manía o hipomanía) y periodos de tristeza, falta de energía o desesperanza.
+                Estos cambios pueden afectar el sueño, el pensamiento y la toma de decisiones.
+            </p>
+            <p>
+                El acompañamiento profesional es clave, pues suele requerir tratamiento especializado, educación sobre el
+                trastorno y apoyo de la red cercana para cuidar ritmos de sueño, rutinas y señales tempranas de recaída.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalEsquizofrenia" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalEsquizofrenia')">&times;</span>
+            <h3>Esquizofrenia</h3>
+            <p>
+                La esquizofrenia es un trastorno psicótico que puede incluir alucinaciones (por ejemplo, escuchar voces),
+                ideas delirantes, alteraciones en el pensamiento y cambios en la conducta. Suele requerir un seguimiento
+                médico y psicológico constante.
+            </p>
+            <p>
+                Con tratamiento, apoyo familiar y comunitario, muchas personas pueden llevar una vida significativa.
+                La comprensión, el respeto y la reducción del estigma son fundamentales para un buen pronóstico.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalTOC" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalTOC')">&times;</span>
+            <h3>Trastorno obsesivo-compulsivo (TOC)</h3>
+            <p>
+                El TOC se manifiesta con pensamientos intrusivos y repetitivos (obsesiones) que generan ansiedad,
+                acompañados de conductas o rituales (compulsiones) que la persona siente que debe realizar para
+                aliviar esa incomodidad, como revisar, ordenar o limpiar de manera excesiva.
+            </p>
+            <p>
+                El tratamiento suele combinar psicoterapia y, en algunos casos, medicación. Pedir ayuda especializada
+                puede ayudar a reducir la frecuencia e intensidad de estos síntomas y a recuperar libertad en el día a día.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalPanico" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalPanico')">&times;</span>
+            <h3>Trastorno de pánico</h3>
+            <p>
+                El trastorno de pánico se caracteriza por ataques súbitos de miedo intenso, acompañados de síntomas
+                físicos como palpitaciones, sudoración, dificultad para respirar o sensación de pérdida de control.
+                Pueden ser muy alarmantes y llevar a evitar lugares o situaciones por temor a que se repitan.
+            </p>
+            <p>
+                Existen tratamientos efectivos para aprender a reconocer estos episodios, reducir su impacto y
+                recuperar la confianza para realizar actividades cotidianas. El apoyo profesional es muy útil
+                en este proceso.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalTEPT" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalTEPT')">&times;</span>
+            <h3>Trastorno de estrés postraumático (TEPT)</h3>
+            <p>
+                El TEPT puede aparecer después de vivir o presenciar una experiencia traumática. Se asocia a recuerdos
+                invasivos, pesadillas, reacciones intensas ante recordatorios del evento y, a veces, evitación de personas
+                o lugares relacionados con lo sucedido.
+            </p>
+            <p>
+                La terapia enfocada en trauma y un entorno de apoyo seguro son pilares importantes para el proceso de
+                recuperación. No es necesario atravesar este camino en soledad.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalAlimentaria" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalAlimentaria')">&times;</span>
+            <h3>Fobia Socia</h3>
+            <p>
+                La Fobia Social, también llamada Trastorno de Ansiedad Social, es un trastorno psicológico 
+                caracterizado por un miedo intenso y persistente a situaciones sociales en las que la persona 
+                teme ser observada, juzgada, humillada o rechazada por los demás. No se trata de simple timidez;
+                es una condición que puede interferir significativamente con la vida cotidiana, las relaciones y
+                el rendimiento académico o laboral.
+            </p>
+            <p>
+                Las personas con fobia social suelen experimentar ansiedad anticipatoria, es decir, preocupación 
+                días o incluso semanas antes de una situación social. Este miedo es tan fuerte que la persona evita 
+                esas circunstancias o las soporta con un elevado malestar físico y emocional.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalTLP" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalTLP')">&times;</span>
+            <h3>Trastorno de personalidad límite (TLP)</h3>
+            <p>
+                El TLP se asocia a emociones muy intensas y cambiantes, dificultad para regularlas, miedo al abandono
+                y relaciones interpersonales inestables. Puede incluir impulsividad y una autoimagen cambiante.
+            </p>
+            <p>
+                Con un acompañamiento especializado y constante es posible aprender estrategias para manejar las emociones,
+                mejorar las relaciones y construir una vida más estable y satisfactoria.
+            </p>
+        </div>
+    </div>
+
+    <div id="modalInsomnio" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modalInsomnio')">&times;</span>
+            <h3>Trastorno de Duelo Complicado</h3>
+            <p>
+                El Trastorno de Duelo Complicado, también conocido como Duelo Prolongado o Duelo Persistente, es una 
+                condición emocional en la que la persona no logra adaptarse a la pérdida de un ser querido y el proceso
+                de duelo se vuelve intenso, prolongado y doloroso, interfiriendo con la vida diaria. A diferencia del 
+                duelo normal, que aunque es doloroso avanza gradualmente hacia la aceptación, el duelo complicado se estanca,
+                se intensifica o se vuelve inesperadamente crónico.
+            </p>
+            <p>
+                Este trastorno ocurre cuando las emociones naturales del duelo —como tristeza, añoranza y vacío— permanecen 
+                muy intensas durante meses o años, impidiendo que la persona retome su vida, su rutina, sus proyectos o su 
+                capacidad de disfrutar.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // --- UTILIDAD: Scroll suave a secciones ---
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
+
+        // --- BÚSQUEDA GLOBAL ---
+        const searchInput = document.getElementById("searchInput");
+        const toggleSearchBtn = document.getElementById("toggleSearchBtn");
+        const searchableItems = document.querySelectorAll(".searchable");
+
+        toggleSearchBtn.addEventListener("click", () => {
+            searchInput.classList.toggle("active");
+            if (searchInput.classList.contains("active")) {
+                searchInput.focus();
+            } else {
+                searchInput.value = "";
+                aplicarFiltroBusqueda("");
+            }
+        });
+
+        searchInput.addEventListener("input", (e) => {
+            aplicarFiltroBusqueda(e.target.value.toLowerCase());
+        });
+
+        function aplicarFiltroBusqueda(texto) {
+            searchableItems.forEach((item) => {
+                const title = item.getAttribute("data-title") || "";
+                if (title.toLowerCase().includes(texto)) {
+                    item.style.display = "";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        // --- PODCASTS: Mostrar / ocultar ---
+        const podcastsGrid = document.getElementById("podcastsGrid");
+        const togglePodcastsBtn = document.getElementById("togglePodcastsBtn");
+        let podcastsVisible = false;
+
+        togglePodcastsBtn.addEventListener("click", () => {
+            podcastsVisible = !podcastsVisible;
+            podcastsGrid.style.display = podcastsVisible ? "grid" : "none";
+            togglePodcastsBtn.textContent = podcastsVisible
+                ? "Ocultar podcasts"
+                : "Ver todos los podcasts";
+        });
+
+        // --- CUESTIONARIO Y CÁLCULOS ---
+        const quizForm = document.getElementById("quizForm");
+        const resultadoGeneralEl = document.getElementById("resultadoGeneral");
+        const listaResultadosEl = document.getElementById("listaResultados");
+
+        const trastornos = [
+            "ansiedad",
+            "depresion",
+            "bipolar",
+            "esquizofrenia",
+            "toc",
+            "panico",
+            "tept",
+            "alimentaria",
+            "tlp",
+            "insomnio",
+        ];
+
+        const nombresTrastornos = {
+            ansiedad: "Ansiedad",
+            depresion: "Depresión",
+            bipolar: "Trastorno bipolar",
+            esquizofrenia: "Esquizofrenia",
+            toc: "Trastorno obsesivo-compulsivo",
+            panico: "Trastorno de pánico",
+            tept: "Estrés postraumático (TEPT)",
+            alimentaria: "Trastornos de la conducta alimentaria",
+            tlp: "Trastorno de personalidad límite (TLP)",
+            insomnio: "Insomnio crónico",
+        };
+
+        const tipsTrastornos = {
+            ansiedad:
+                "Practica respiraciones profundas, haz pausas breves en tu día y busca espacios de apoyo emocional.",
+            depresion:
+                "Mantén rutinas suaves, intenta actividades que antes disfrutabas y conversa con alguien de confianza.",
+            bipolar:
+                "Lleva un registro de tu estado de ánimo y consulta con profesionales para ajustar tu tratamiento.",
+            esquizofrenia:
+                "Sigue las indicaciones médicas y mantén una red de apoyo clara y organizada.",
+            toc:
+                "Nota cuándo aparecen tus rituales y explora técnicas para demorar o reducir su duración.",
+            panico:
+                "Aprende ejercicios de respiración y busca acompañamiento profesional para comprender tus síntomas.",
+            tept:
+                "Reconocer tus desencadenantes y hablar sobre tu experiencia en un entorno seguro puede ser de ayuda.",
+            alimentaria:
+                "Evita dietas extremas y busca apoyo especializado para trabajar la relación con la comida y el cuerpo.",
+            tlp:
+                "Trabaja en el reconocimiento de tus emociones y en el establecimiento de límites saludables.",
+            insomnio:
+                "Establece horarios regulares de sueño y limita pantallas antes de dormir para facilitar el descanso.",
+        };
+
+        let conteosGlobales = trastornos.reduce((acc, t) => {
+            acc[t] = 0;
+            return acc;
+        }, {});
+
+        // Actualizar estilo verde en la opción seleccionada
+        const quizOptionInputs = quizForm.querySelectorAll(".quiz-scales input[type='radio']");
+        quizOptionInputs.forEach((input) => {
+            input.addEventListener("change", () => {
+                const name = input.name;
+                const groupInputs = quizForm.querySelectorAll("input[name='" + name + "']");
+                groupInputs.forEach((inp) => {
+                    const chip = inp.parentElement.querySelector(".quiz-option-chip");
+                    if (chip) {
+                        chip.classList.remove("selected");
+                    }
+                });
+                const chip = input.parentElement.querySelector(".quiz-option-chip");
+                if (chip) {
+                    chip.classList.add("selected");
+                }
+            });
+        });
+
+        function procesarCuestionario() {
+            const preguntas = quizForm.querySelectorAll(".quiz-question");
+            let totales = trastornos.reduce((acc, t) => {
+                acc[t] = 0;
+                return acc;
+            }, {});
+            let totalPuntaje = 0;
+            let totalMaximo = preguntas.length * 4;
+            let preguntasRespondidas = 0;
+
+            preguntas.forEach((pregunta) => {
+                const radios = pregunta.querySelectorAll("input[type='radio']");
+                const trastorno = pregunta.dataset.disorder;
+                let valorSeleccionado = 0;
+                radios.forEach((r) => {
+                    if (r.checked) {
+                        valorSeleccionado = parseInt(r.value, 10);
+                    }
+                });
+                if (valorSeleccionado > 0) {
+                    preguntasRespondidas++;
+                }
+                if (trastorno && valorSeleccionado > 0) {
+                    totales[trastorno] += valorSeleccionado;
+                    totalPuntaje += valorSeleccionado;
+                }
+            });
+
+            if (preguntasRespondidas === 0) {
+                alert("Responde al menos una pregunta para calcular un resultado aproximado.");
+                return;
+            }
+
+            const porcentajeGeneral = Math.round((totalPuntaje / totalMaximo) * 100);
+
+            resultadoGeneralEl.textContent =
+                "Porcentaje general de intensidad de síntomas reportados: " +
+                porcentajeGeneral +
+                "% (estimado).";
+
+            const maxPorTrastornoReal = {
+                ansiedad: 8,
+                depresion: 4,
+                bipolar: 4,
+                esquizofrenia: 4,
+                toc: 4,
+                panico: 4,
+                tept: 4,
+                alimentaria: 4,
+                tlp: 4,
+                insomnio: 4,
+            };
+
+            listaResultadosEl.innerHTML = "";
+
+            trastornos.forEach((t) => {
+                const valor = totales[t];
+                const maxLocal = maxPorTrastornoReal[t] || 4;
+                const porcentaje = maxLocal > 0 ? Math.round((valor / maxLocal) * 100) : 0;
+
+                if (valor > 0) {
+                    const li = document.createElement("li");
+                    li.className = "results-item";
+                    li.innerHTML = `
+                        <div>
+                            <div class="result-name">${nombresTrastornos[t]}</div>
+                            <div class="result-tip">${tipsTrastornos[t]}</div>
+                        </div>
+                        <div class="result-percentage">${porcentaje}%</div>
+                    `;
+                    listaResultadosEl.appendChild(li);
+                }
+
+                conteosGlobales[t] += valor;
+            });
+
+            if (!listaResultadosEl.children.length) {
+                const li = document.createElement("li");
+                li.className = "results-item";
+                li.innerHTML =
+                    "<div>No se observan patrones claros en este breve cuestionario.</div>";
+                listaResultadosEl.appendChild(li);
+            }
+        }
+
+        function limpiarResultados() {
+            resultadoGeneralEl.textContent = "Aún no se han calculado resultados.";
+            listaResultadosEl.innerHTML = "";
+
+            // Quitar selección visual de chips
+            const chips = quizForm.querySelectorAll(".quiz-option-chip");
+            chips.forEach((chip) => chip.classList.remove("selected"));
+        }
+
+        // --- CARRUSEL ---
+        const carouselTrack = document.getElementById("carouselTrack");
+        const carouselDots = document.querySelectorAll(".carousel-dot");
+        const prevSlideBtn = document.getElementById("prevSlide");
+        const nextSlideBtn = document.getElementById("nextSlide");
+        let slideActual = 0;
+        const totalSlides = 10;
+
+        function irASlide(index) {
+            slideActual = (index + totalSlides) % totalSlides;
+            const offset = -slideActual * 100;
+            carouselTrack.style.transform = `translateX(${offset}%)`;
+            carouselDots.forEach((dot, i) => {
+                dot.classList.toggle("active", i === slideActual);
+            });
+        }
+
+        prevSlideBtn.addEventListener("click", () => irASlide(slideActual - 1));
+        nextSlideBtn.addEventListener("click", () => irASlide(slideActual + 1));
+        carouselDots.forEach((dot) => {
+            dot.addEventListener("click", () => {
+                const index = parseInt(dot.dataset.index, 10);
+                irASlide(index);
+            });
+        });
+
+        let autoSlideInterval = setInterval(() => {
+            irASlide(slideActual + 1);
+        }, 6000);
+
+        [prevSlideBtn, nextSlideBtn].forEach((btn) => {
+            btn.addEventListener("click", () => {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = setInterval(() => {
+                    irASlide(slideActual + 1);
+                }, 6000);
+            });
+        });
+
+        // --- MODALES TRASTORNOS ---
+        function abrirModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.style.display = "block";
+        }
+
+        function cerrarModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            const modales = document.getElementsByClassName("modal");
+            for (let i = 0; i < modales.length; i++) {
+                if (event.target === modales[i]) {
+                    modales[i].style.display = "none";
+                }
+            }
+        };
+
+        // --- VIDEOS: abrir en nueva pestaña ---
+        function abrirVideo(url) {
+            window.open(url, "_blank");
+        }
+
+        // Inicializar al cargar
+        window.addEventListener("load", () => {
+            irASlide(0);
+        });
+    </script>
+</body>
+</html>
